@@ -35,6 +35,7 @@ class DeviceController implements DeviceIdApi {
         service.saveMeasurement(measurementDO);
         return ResponseEntity.ok(measurement);
     }
+
     @Override
     public ResponseEntity<Measurements> retrieveMeasurements(final String deviceId) {
         LOGGER.info("Retrieving all measurements for device '{}'", deviceId);
@@ -42,6 +43,10 @@ class DeviceController implements DeviceIdApi {
                 .stream()
                 .map(this::toMeasurement)
                 .toList();
+
+        int sizeOfMeasurement = measurements.size();
+        LOGGER.info("Size of measurements", sizeOfMeasurement);
+
         final Measurements measurementsResult = new Measurements();
         measurementsResult.measurements(measurements);
         return ResponseEntity.ok(measurementsResult);
